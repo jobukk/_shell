@@ -11,13 +11,11 @@
 #include <limits.h>
 #include <fcntl.h>
 #include <errno.h>
-#include <stdarg.h>
 
 /* for read/write buffers */
 #define READ_BUF_SIZE 1024
 #define WRITE_BUF_SIZE 1024
 #define BUF_FLUSH -1
-#define BUFFER_SIZE 50
 
 /* for command chaining */
 #define CMD_NORM 0
@@ -40,9 +38,9 @@ extern char **environ;
 
 /**
  * struct liststr - singly linked list
- * @num: the number field
- * @str: a string
- * @next: points to the next node
+ * @num: number field
+ * @str: string
+ * @next: point next node
  */
 typedef struct liststr
 {
@@ -50,8 +48,6 @@ typedef struct liststr
 	char *str;
 	struct liststr *next;
 } list_t;
-
-
 
 
 typedef struct passinfo
@@ -84,9 +80,9 @@ typedef struct passinfo
 	}
 
 /**
- *struct builtin - contains a builtin string and related function
- *@type: the builtin command flag
- *@func: the function
+ *struct builtin - builtin string 
+ *@type: builtin command flag
+ *@func: function
  */
 typedef struct builtin
 {
@@ -107,9 +103,6 @@ char *find_path(info_t *, char *, char *);
 
 /* loophsh.c */
 int loophsh(char **);
-
-
-void custom_print_error(info_t *info);
 
 /* errors.c */
 void _eputs(char *);
@@ -154,7 +147,7 @@ int _atoi(char *);
 
 /* errors1.c */
 int _erratoi(char *);
-void print_error(info_t *info, const char *format, ...);
+void print_error(info_t *, char *);
 int print_d(int, int);
 char *convert_number(long int, int, int);
 void remove_comments(char *);
@@ -189,8 +182,6 @@ int populate_env_list(info_t *);
 char **get_environ(info_t *);
 int _unsetenv(info_t *, char *);
 int _setenv(info_t *, char *, char *);
-void free_string_array(char **array);
-
 
 /* history.c */
 char *get_history_file(info_t *info);
@@ -200,11 +191,11 @@ int build_history_list(info_t *info, char *buf, int linecount);
 int renumber_history(info_t *info);
 
 /* lists.c */
-list_t *add_node(list_t **head, const char *str);
-list_t *add_node_end(list_t **head, const char *str);
-size_t print_list_str(const list_t *h);
-int delete_node_at_index(list_t **head, unsigned int index);
-void free_list(list_t *head);
+list_t *add_node(list_t **, const char *, int);
+list_t *add_node_end(list_t **, const char *, int);
+size_t print_list_str(const list_t *);
+int delete_node_at_index(list_t **, unsigned int);
+void free_list(list_t **);
 
 /* lists1.c */
 size_t list_len(const list_t *);

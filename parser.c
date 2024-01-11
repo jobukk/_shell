@@ -36,17 +36,15 @@ char *dup_chars(char *pathstr, int start, int stop)
 {
     int i;
     int length = stop - start;
-    char *buf = malloc(length + 1);  
+    char *buf = malloc(length + 1);
 
     if (buf == NULL) {
         fprintf(stderr, "Memory allocation error\n");
         exit(EXIT_FAILURE);
     }
 
-    i = 0;
-    while (i < length) {
+    for (i = 0; i < length; i++) {
         buf[i] = pathstr[start + i];
-        i++;
     }
     buf[length] = '\0';
 

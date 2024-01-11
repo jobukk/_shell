@@ -10,37 +10,38 @@
  */
 ssize_t input_buf(info_t *info, char **buf, size_t *len)
 {
-ssize_t t = 0;
-size_t len_p = 0;
+    ssize_t t = 0;
+    size_t len_p = 0;
 
-if (!*len)
-{
-free(*buf);
-*buf = NULL;
-signal(SIGINT, sigintHandler);
+    if (!*len)
+    {
+        free(*buf);
+        *buf = NULL;
+        signal(SIGINT, sigintHandler);
 
 #if USE_GETLINE
-t = getline(buf, &len_p, stdin);
+        t = getline(buf, &len_p, stdin);
 #else
-t = _getline(info, buf, &len_p);
+        t = _getline(info, buf, &len_p);
 #endif
 
-if (t > 0)
-{
-(*buf)[(t > 0 && (*buf)[t - 1] == '\n') ? (t - 1) : 0] = '\0';
-t -= (t > 0 && (*buf)[t - 1] == '\n');
+        if (t > 0)
+        {
+            (*buf)[(t > 0 && (*buf)[t - 1] == '\n') ? (t - 1) : 0] = '\0';
+            t -= (t > 0 && (*buf)[t - 1] == '\n');
 
-info->linecount_flag = 1;
-remove_comments(*buf);
-build_history_list(info, *buf, info->histcount++);
+            info->linecount_flag = 1;
+            remove_comments(*buf);
+            build_history_list(info, *buf, info->histcount++);
 
-*len = t;
-info->cmd_buf = buf;
-}
-}
+            *len = t;
+            info->cmd_buf = buf;
+        }
+    }
 
-return (t);
-}
+    return t;
+} 
+
 
 
 /**

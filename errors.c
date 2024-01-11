@@ -29,8 +29,9 @@ static char buf[WRITE_BUF_SIZE];
 
 if (c == BUF_FLUSH || j >= WRITE_BUF_SIZE)
 {
-write(2, buf, j);
-j = 0;
+  if (j > 0)
+            write(2, buf, j);
+  j = 0;
 }
 
 if (c != BUF_FLUSH)

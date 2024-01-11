@@ -86,7 +86,7 @@ list_t *node = NULL;
 size_t i = 0;
 
 while (environ[i])
-add_node_end(&node, environ[i]);
+add_node_end(&node, environ[i++], 0);
 
 
 info->env = node;

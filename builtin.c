@@ -1,40 +1,30 @@
 #include "shell.h"
-void custom_print_error(info_t *info);
+
 /**
  * _myexit - exits shell
  * @info: Structure
  * Return:exit status
  *
  */
-int _myexit(info_t *info)
-{
-int exitcheck = (info->argv[1] != NULL) ? _erratoi(info->argv[1]) : -1;
+int _myexit(info_t *info) {
+    if (info->argv[1] != NULL) {
+        char *endptr;
+        long exitcheck = strtol(info->argv[1], &endptr, 10);
 
-if (exitcheck == -1)
-{
-info->status = 2;
-custom_print_error(info);
-return (1);
-}
+        if (*endptr != '\0' || exitcheck < INT_MIN || exitcheck > INT_MAX) {
+            fprintf(stderr, "Invalid exit number: %s\n", info->argv[1]);
+            return (1);
+        }
 
-info->err_num = exitcheck;
-return ((info->argv[1] != NULL) ? -2 : -2);
-}
-
-/**
- * custom_print_error -  error message
- * @info: Structure
- * Return:  0
- */
-
-void custom_print_error(info_t *info)
-{
-    if (info->argv[1] != NULL)
-    {
-        print_error(info, "not a good number: %s\n", info->argv[1]);
+        info->err_num = (int)exitcheck;
+    } else {
+        info->err_num = -1;
     }
-    
+
+    return (-2);
 }
+
+
 
 
 /**
@@ -92,14 +82,37 @@ int _mycd(info_t *info)
 }
 
 /**
+ * print_help_message - function to print message
+ * 
+ * Return: 0
+*/
+void print_help_message() {
+    printf("Function not yet implemented.\n");
+}
+
+/**
+ * print_argument - arg to print
+ * @arg: argurment
+ * Return: 0
+ */
+
+void print_argument(const char *arg) {
+    printf("%s\n", arg);
+}
+
+/**
  * _myhelp - cd of the process
  * @info: Structure
  * Return: 0
  */
-int _myhelp(info_t *info)
-{
-_puts("help call works. Function not yet implemented \n");
-if (info->argv[0] != NULL)
-_puts(info->argv[0]);
-return (0);
+
+int _myhelp(info_t *info) {
+    if (info->argv[0] != NULL) {
+        print_help_message();
+        print_argument(info->argv[0]); 
+    }
+
+    return (0);
 }
+
+

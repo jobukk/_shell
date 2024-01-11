@@ -100,7 +100,7 @@ int _setenv(info_t *info, char *var, char *value)
 		}
 	}
 
-	add_node_end(&(info->env), buf);
+	add_node_end(&(info->env), buf, 0);
 	info->env_changed = 1;
 
 	return (0);

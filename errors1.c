@@ -39,20 +39,15 @@ return (result);
  * @estr: string
  * Return: 0 no number
  */
-void print_error(info_t *info, const char *format, ...)
+void print_error(info_t *info, char *estr)
 {
-    va_list args;
     _eputs(info->fname);
     _eputs(": ");
     print_d(info->line_count, STDERR_FILENO);
     _eputs(": ");
     _eputs(info->argv[0]);
     _eputs(": ");
-    
-    
-    va_start(args, format);
-    vfprintf(stderr, format, args);
-    va_end(args);
+    _eputs(estr);
 }
 
 /**
@@ -104,9 +99,9 @@ char *convert_number(long int num, int base, int flags)
 {
 unsigned long n = (flags & CONVERT_UNSIGNED) ? num : -num;
 char sign = (num < 0 && !(flags & CONVERT_UNSIGNED)) ? '-' : '\0';
-static char buffer[BUFFER_SIZE];
+static char buffer[50];
 char *array = (flags & CONVERT_LOWERCASE) ? "0123456789abcdef" : "0123456789ABCDEF";
-char *ptr = &buffer[BUFFER_SIZE - 1];
+char *ptr = &buffer[50 - 1];
 *ptr = '\0';
 
 do {
