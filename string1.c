@@ -1,33 +1,33 @@
 #include "shell.h"
 
 /**
- * _strcpy - copies a string
- * @dest: the destination
- * @src: the source
+ * _strcpy - copy
+ * @dest:  destination
+ * @src: source
  *
- * Return: pointer to destination
+ * Return: destination
  */
 char *_strcpy(char *dest, char *src)
 {
-    int i;
+    int j;
 
     if (dest == src || src == NULL)
         return dest;
 
-    for (i = 0; src[i]; i++)
+    for (j = 0; src[j]; j++)
     {
-        dest[i] = src[i];
+        dest[j] = src[j];
     }
 
-    dest[i] = '\0';
+    dest[j] = '\0';
     return dest;
 }
 
 /**
- * _strdup - duplicates a string
- * @str: the string to duplicate
+ * _strdup - duplicate
+ * @str: string duplicate
  *
- * Return: pointer to the duplicated string
+ * Return: ptr to duplicate str
  */
 char *_strdup(const char *str)
 {
@@ -37,8 +37,8 @@ char *_strdup(const char *str)
     if (str == NULL)
         return NULL;
 
-    while (*str++)
-        length++;
+    for (length = 0; str[length] != '\0'; length++)
+        ;
 
     ret = malloc(sizeof(char) * (length + 1));
     if (!ret)
@@ -51,10 +51,10 @@ char *_strdup(const char *str)
 }
 
 /**
- * _puts - prints an input string
- * @str: the string to be printed
+ * _puts -  input string
+ * @str: string to be printed
  *
- * Return: Nothing
+ * Return: None
  */
 void _puts(char *str)
 {
@@ -66,25 +66,15 @@ void _puts(char *str)
 }
 
 /**
- * _putchar - writes the character c to stdout
- * @c: The character to print
+ * _putchar - char c stdout
+ * @c: char to the print
  *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
+ * Return:  1.
  */
 int _putchar(char c)
 {
     static int i;
     static char buf[WRITE_BUF_SIZE];
 
-    if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
-    {
-        write(1, buf, i);
-        i = 0;
-    }
-
-    if (c != BUF_FLUSH)
-        buf[i++] = c;
-
-    return 1;
+    return (c == BUF_FLUSH || i >= WRITE_BUF_SIZE) ? write(1, buf, i), i = 0, 1 : (c != BUF_FLUSH) ? buf[i++] = c, 1 : 1;
 }

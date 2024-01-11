@@ -3,21 +3,15 @@
 #define MAX_PATH_SIZE 1024
 
 
-/**
- * Parsing, syntax analysis, or syntactic analysis is the process of analyzing a string of symbols,
- * either in natural language, computer languages or data structures
- */
 
 /**
- * is_cmd - determines if a file is an executable command
- * @info: the info struct
- * @path: path to the file
+ * is_cmd -  executable command
+ * @info: info struct
+ * @path: path
  *
- * Return: 1 if true, 0 otherwise
+ * Return: 1
  */
-/**
- * New implementation of is_cmd function with different logic
- */
+
 int is_cmd(info_t *info __attribute__((unused)), char *path)
 {
     struct stat st;
@@ -31,12 +25,12 @@ int is_cmd(info_t *info __attribute__((unused)), char *path)
 
 
 /**
- * dup_chars - duplicates characters
- * @pathstr: the PATH string
- * @start: starting index
- * @stop: stopping index
+ * dup_chars - duplicate char
+ * @pathstr: PATH string
+ * @start: start index
+ * @stop: stop index
  *
- * Return: pointer to new buffer
+ * Return: ptr
  */
 char *dup_chars(char *pathstr, int start, int stop)
 {
@@ -61,10 +55,10 @@ char *dup_chars(char *pathstr, int start, int stop)
 
 
 /**
- * find_path - finds this cmd in the PATH string
- * @info: the info struct
- * @pathstr: the PATH string
- * @cmd: the cmd to find
+ * find_path - find PATH string
+ * @info:  info struct
+ * @pathstr: find PATH string
+ * @cmd: cmd to find
  *
  * Return: full path of cmd if found or NULL
  */

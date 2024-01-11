@@ -1,26 +1,26 @@
 #include "shell.h"
 
 /**
- * _strncpy - copies a string
- * @dest: the destination string to be copied to
- * @src: the source string
- * @n: the amount of characters to be copied
- * Return: the concatenated string
+ * _strncpy - copy a string
+ * @dest: dest
+ * @src:  string
+ * @n: characters to be copy
+ * Return: concatenated string
  */
 
 char *_strncpy(char *dest, char *src, int n)
 {
-    int j;
-    int i;
-    char *s = dest;
+int j;
+int k;
+char *s = dest;
 
-    for ( i = 0; (i < n - 1) && (dest[i] = src[i]) != '\0'; i++)
-        ;
+for (k = 0; (k < n - 1) && (dest[k] = src[k]) != '\0'; k++)
+;
 
-    for ( j = i; j < n; dest[j++] = '\0')
-        ;
+for (j = k; j < n; dest[j++] = '\0')
+;
 
-    return s;
+return (s);
 }
 
 /**
@@ -32,34 +32,29 @@ char *_strncpy(char *dest, char *src, int n)
  */
 char *_strncat(char *dest, char *src, int n)
 {
-    int j;
-    int i;
-    char *s = dest;
+int k;
+int i;
+char *s = dest;
 
-    
-    for (i = 0; dest[i] != '\0'; i++);
-
-    
-    for (j = 0; (j < n) && (dest[i + j] = src[j]) != '\0'; j++);
-
-    dest[i + j] = '\0';
-
-    return s;
+for (i = 0; dest[i] != '\0'; i++);
+for (k = 0; (k < n) && (dest[i + k] = src[k]) != '\0'; k++);
+dest[i + k] = '\0';
+return (s);
 }
 
+
 /**
- * _strchr - locates a character in a string
- * @s: the string to be parsed
- * @c: the character to look for
- * Return: (s) a pointer to the memory area s
+ * _strchr - check for a character
+ * @s:  string
+ * @c: character
+ * Return: (s) a ptr to a memory
  */
 char *_strchr(char *s, char c)
 {
-    do
-    {
-        if (*s == c)
-            return s;
-    } while (*s++ != '\0');
+do {
+if (*s == c)
+return (s);
+} while (*s++ != '\0');
 
-    return NULL;
+return (NULL);
 }
