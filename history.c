@@ -124,16 +124,18 @@ return (info->histcount);
  */
 int build_history_list(info_t *info, char *buf, int linecount)
 {
-list_t *node = info->history;
+	list_t *node = NULL;
 
-node = (node) ? info->history : node;
-add_node_end(&node, buf, linecount);
+	if (info->history)
+		node = info->history;
+	add_node_end(&(info->history), buf);
+    printf("Linecount: %d\n", linecount);
 
-if (!info->history)
-info->history = node;
-
-return (0);
+	if (!info->history)
+		info->history = node;
+	return (0);
 }
+
 
 /**
  * renumber_history - renumber

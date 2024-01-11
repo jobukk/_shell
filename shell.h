@@ -11,6 +11,7 @@
 #include <limits.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <stdarg.h>
 
 /* for read/write buffers */
 #define READ_BUF_SIZE 1024
@@ -107,6 +108,9 @@ char *find_path(info_t *, char *, char *);
 /* loophsh.c */
 int loophsh(char **);
 
+
+void custom_print_error(info_t *info);
+
 /* errors.c */
 void _eputs(char *);
 int _eputchar(char);
@@ -150,7 +154,7 @@ int _atoi(char *);
 
 /* errors1.c */
 int _erratoi(char *);
-void print_error(info_t *, char *);
+void print_error(info_t *info, const char *format, ...);
 int print_d(int, int);
 char *convert_number(long int, int, int);
 void remove_comments(char *);
@@ -185,6 +189,8 @@ int populate_env_list(info_t *);
 char **get_environ(info_t *);
 int _unsetenv(info_t *, char *);
 int _setenv(info_t *, char *, char *);
+void free_string_array(char **array);
+
 
 /* history.c */
 char *get_history_file(info_t *info);

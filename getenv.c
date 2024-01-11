@@ -1,5 +1,21 @@
 #include "shell.h"
 
+#include <stdlib.h>
+
+void free_string_array(char **array)
+{
+	int i;
+    if (array == NULL) {
+        return;
+    }
+
+    for (i = 0; array[i] != NULL; i++) {
+        free(array[i]);
+    }
+
+    free(array);
+}
+
 /**
  * get_environ - string array
  * @info: Structure
@@ -84,7 +100,7 @@ int _setenv(info_t *info, char *var, char *value)
 		}
 	}
 
-	add_node_end(&(info->env), buf, 0);
+	add_node_end(&(info->env), buf);
 	info->env_changed = 1;
 
 	return (0);

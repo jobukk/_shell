@@ -19,18 +19,20 @@ return ((print_list(info->history)));
  */
 int unset_alias(info_t *info, char *str)
 {
-char *p = _strchr(str, '=');
+    int index_to_delete;
+    int ret;
+    char *p = _strchr(str, '=');
 
-if (!p)
-return (1);
+    if (!p)
+        return 1;
 
-*p = 0;
-int index_to_delete = get_node_index(info->alias,
-node_starts_with(info->alias, str, -1));
-int ret = delete_node_at_index(&(info->alias), index_to_delete);
-*p = '=';
+    *p = 0;
+    index_to_delete = get_node_index(info->alias,
+                                      node_starts_with(info->alias, str, -1));
+    *p = '=';
 
-return (ret);
+    ret = delete_node_at_index(&(info->alias), index_to_delete);
+    return ret;
 }
 
 
@@ -43,15 +45,24 @@ return (ret);
  */
 int set_alias(info_t *info, char *str)
 {
-char *p;
+    char *p;
+    int ret;
 
-p = _strchr(str, '=');
-int ret = (!p) ? 1 : (!*++p) ? unset_alias(info, str) :
-(unset_alias(info, str) || (add_node_end(&(info->alias), str, 0) == NULL));
-return (ret);
+    p = _strchr(str, '=');
+    if (!p) 
+    {
+        ret = 1;
+    } 
+    else if (!*++p)
+    {
+        ret = unset_alias(info, str);
+    } 
+    else 
+    {
+        ret = unset_alias(info, str) || (add_node_end(&(info->alias), str) == NULL);
+    }
 
-
-
+    return ret;
 }
 
 /**

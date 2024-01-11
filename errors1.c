@@ -39,15 +39,20 @@ return (result);
  * @estr: string
  * Return: 0 no number
  */
-void print_error(info_t *info, char *estr)
+void print_error(info_t *info, const char *format, ...)
 {
-_eputs(info->fname);
-_eputs(": ");
-print_d(info->line_count, STDERR_FILENO);
-_eputs(": ");
-_eputs(info->argv[0]);
-_eputs(": ");
-_eputs(estr);
+    va_list args;
+    _eputs(info->fname);
+    _eputs(": ");
+    print_d(info->line_count, STDERR_FILENO);
+    _eputs(": ");
+    _eputs(info->argv[0]);
+    _eputs(": ");
+    
+    
+    va_start(args, format);
+    vfprintf(stderr, format, args);
+    va_end(args);
 }
 
 /**

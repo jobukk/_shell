@@ -1,5 +1,5 @@
 #include "shell.h"
-
+void custom_print_error(info_t *info);
 /**
  * _myexit - exits shell
  * @info: Structure
@@ -29,11 +29,12 @@ return ((info->argv[1] != NULL) ? -2 : -2);
 
 void custom_print_error(info_t *info)
 {
-print_error(info, "not a good number: %s\n", info->argv[1]);
+    if (info->argv[1] != NULL)
+    {
+        print_error(info, "not a good number: %s\n", info->argv[1]);
+    }
+    
 }
-
-
-
 
 
 /**
@@ -43,46 +44,51 @@ print_error(info, "not a good number: %s\n", info->argv[1]);
  */
 int _mycd(info_t *info)
 {
-char *dir, buffer[1024];
-int chdir_ret;
+    char *dir, buffer[1024];
+    int chdir_ret;
 
-if (!(getcwd(buffer, 1024)))
-{
-_puts("TODO: >>getcwd failure emsg here<<\n");
-return (0);
-}
+    if (!(getcwd(buffer, 1024)))
+    {
+        _puts("TODO: >>getcwd failure emsg here<<\n");
+        return 0;
+    }
 
-if (info->argv[1] == NULL)
-{
-dir = _getenv(info, "HOME=");
-dir = (dir == NULL) ? ((_getenv(info, "PWD=") ?: "/")) : dir;
-chdir_ret = chdir(dir);
-}
-else if (_strcmp(info->argv[1], "-") == 0)
-{
-if (_getenv(info, "OLDPWD="))
-_puts(_getenv(info, "OLDPWD="));
-else
-_puts(buffer), _putchar('\n');
-chdir_ret = chdir((_getenv(info, "OLDPWD=") ?: "/"));
-return ((!_getenv(info, "OLDPWD=")) ? 1 : 0);
-}
-else
-{
-chdir_ret = chdir(info->argv[1]);
-if (chdir_ret == -1)
-{
-print_error(info, "can't cd to ");
-_eputs(info->argv[1]);
-_eputchar('\n');
-}
-else
-{
-_setenv(info, "OLDPWD", _getenv(info, "PWD="));
-_setenv(info, "PWD", getcwd(buffer, 1024));
-}
-}
-return (0);
+    if (info->argv[1] == NULL)
+    {
+        dir = _getenv(info, "PWD=");
+        dir = (dir == NULL) ? "/" : dir;
+    }
+    else if (_strcmp(info->argv[1], "-") == 0)
+    {
+        if (_getenv(info, "OLDPWD="))
+            _puts(_getenv(info, "OLDPWD="));
+        else
+            _puts(buffer), _putchar('\n');
+
+        if (_getenv(info, "OLDPWD="))
+            chdir_ret = chdir(_getenv(info, "OLDPWD="));
+        else
+            chdir_ret = chdir("/");
+
+        return (!_getenv(info, "OLDPWD=") ? 1 : 0);
+    }
+    else
+    {
+        chdir_ret = chdir(info->argv[1]);
+
+        if (chdir_ret == -1)
+        {
+            print_error(info, "cannot cd to ");
+            _eputs(info->argv[1]);
+            _eputchar('\n');
+        }
+        else
+        {
+            _setenv(info, "OLDPWD", _getenv(info, "PWD="));
+            _setenv(info, "PWD", getcwd(buffer, 1024));
+        }
+    }
+    return 0;
 }
 
 /**
